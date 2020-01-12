@@ -14,7 +14,7 @@ jupyter:
 ---
 
 # Name(s)
-**PUT YOUR FULL NAME(S) HERE**
+**Matthew Mazzagatte**
 
 
 **Instructions:** This is an individual assignment, but you may discuss your code with your neighbors.
@@ -36,7 +36,9 @@ Please read and reference the following as your progress through this course.
 **In the space provided below, what are three things that still remain unclear or need further explanation?**
 
 
-**YOUR ANSWER HERE**
+**The first thing is that I would love to continue to learn more tips and tricks of using Jupyter.
+Also, I'm still not fully clear on how to send to github from here and how we will be using github through this. 
+Lastly, do we need to do anything to have the md update automatically for future labs or will it always be synced?**
 
 
 ## Exercises 1-7
@@ -46,46 +48,74 @@ For the following exercises please read the Python appendix in the Marsland text
 ## Exercise 1
 
 ```python
-# YOUR SOLUTION HERE
-#a=1000
-print('this is my answer',a+1) 
+import numpy as np
+a = np.ones((6, 4)) * 2
+a
 ```
 
 ## Exercise 2
 
 ```python
-# YOUR SOLUTION HERE
-a=2000
+b = np.insert(np.insert((np.eye(4) * 2) + 1, 4, 1, axis=0), 5, 1, axis=0)
+b
+#b[range(4), range(4)] = 3
 ```
 
 ## Exercise 3
 
 ```python
-# YOUR SOLUTION HERE
+a * b
 ```
+
+a*b works because it is just element wise multiplication
+
+dot(a,b) does not work because this is using matrix multiplication and here the number of columns
+in a != the number of rows in b
+
 
 ## Exercise 4
 
 ```python
-# YOUR SOLUTION HERE
+np.dot(a.transpose(), b)
 ```
+
+```python
+np.dot(a, b.transpose())
+```
+
+They are different shapes because the first multiplication is a 4x6 * 6x4 which results in a 4x4
+whereas the second one is 6x4 * 4x6 which results in a 6x6
+
 
 ## Exercise 5
 
 ```python
-# YOUR SOLUTION HERE
+def funct(x):
+    print(x*3)
+funct(4)
 ```
 
 ## Exercise 6
 
 ```python
-# YOUR SOLUTION HERE
+def matmaking():
+    a = np.random.rand(5, 5)
+    print("Sum: ", sum(sum(a)))
+    print("Mean: ", a.mean())
+matmaking()
 ```
 
 ## Exercise 7
 
 ```python
-# YOUR SOLUTION HERE
+def count_ones(x):
+    c = 0
+    for i in range(x.shape[0]):
+        for j in range(x.shape[1]):
+            if x[i][j] == 1:     
+                c += 1
+    print(c, len(np.where(x==1)[0]))
+count_ones(b)
 ```
 
 ## Excercises 8-???
@@ -96,28 +126,43 @@ While the Marsland book avoids using another popular package called Pandas, we w
 Repeat exercise A.1 from Marsland, but create a Pandas DataFrame instead of a NumPy array.
 
 ```python
-# YOUR SOLUTION HERE
+import pandas as pd
+```
+
+```python
+a = pd.DataFrame((np.ones((6,4)) * 2))
+a
 ```
 
 ## Exercise 9
 Repeat exercise A.2 using a DataFrame instead.
 
 ```python
-# YOUR SOLUTION HERE
+b = pd.DataFrame(np.insert(np.insert((np.eye(4) * 2) + 1, 4, 1, axis=0), 5, 1, axis=0))
+b
 ```
 
 ## Exercise 10
 Repeat exercise A.3 using DataFrames instead.
 
 ```python
-# YOUR SOLUTION HERE
+a*b
+
+# dot(a, b) still does not work as these matrices cannot be multiplied together using matrix multiplication
 ```
 
 ## Exercise 11
 Repeat exercise A.7 using a dataframe.
 
 ```python
-# YOUR SOLUTION HERE
+def count_ones_again(x):
+    c = 0
+    for i in range(x.shape[1]):
+        for j in range(x.shape[0]):
+            if x[i][j] == 1:
+                c += 1
+    print(c, len(np.where(x==1)[0]))
+count_ones_again(b)
 ```
 
 ## Exercises 12-14
@@ -137,24 +182,27 @@ Notice how we have nice headers and mixed datatypes? That is one of the reasons 
 How do you select the ``name`` column without using .iloc?
 
 ```python
-## YOUR SOLUTION HERE
+titanic_df.name
 ```
 
 ## Exercise 13
 After setting the index to ``sex``, how do you select all passengers that are ``female``? And how many female passengers are there?
 
 ```python
-## YOUR SOLUTION HERE
 titanic_df.set_index('sex',inplace=True)
+titanic_df.loc["female"]
+```
+
+```python
+print(len(titanic_df.loc["female"]), "female passengers")
 ```
 
 ## Exercise 14
 How do you reset the index?
 
 ```python
-## YOUR SOLUTION HERE
+titanic_df = titanic_df.reset_index()
+titanic_df.head()
 ```
 
-```python
-
-```
+We can see that the index was reset.
